@@ -1,96 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E0E0E0">
+        android:background="#E0E0E0"
+        android:orientation="vertical">
 
-    <RelativeLayout
-            android:id="@+id/artist_card"
+    <ImageView
+            android:id="@+id/artist_image"
             android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/unknown_artist" />
+
+    <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="4dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/primary_text_dark"
+            android:textStyle="bold"
+            tools:text="John Doe" />
 
-        <ImageView
-                android:id="@+id/artist_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:alpha="1.0"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/unknown_artist" />
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-        <TextView
-                android:id="@+id/artist_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/artist_country"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                tools:text="California-style pizza" />
-
-        <TextView
-                android:id="@+id/artist_country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/artist_image"
-                android:layout_alignStart="@+id/artist_name"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@android:color/white"
-                tools:text="United States" />
-
-        <TextView
-                android:id="@+id/artist_genres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/artist_name"
-                android:layout_alignBottom="@+id/artist_image"
-                android:layout_marginStart="309dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="172dp"
-                android:textColor="@android:color/white"
-                tools:text="United States" />
-
-    </RelativeLayout>
-
-    <ScrollView
-            android:id="@+id/artist_description_body"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/artist_genres"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/artist_card"
-            android:fillViewport="false">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            tools:text="Pop, Hip-hop" />
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="4dp"
-                android:padding="8dp">
+    <TextView
+            android:id="@+id/artist_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/white"
+            tools:text="United States" />
 
-            <TextView
-                    android:id="@+id/artist_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_description"/>
+    <TextView
+            android:id="@+id/artist_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/default_description" />
 
-            <Button
-                    android:id="@+id/button_play_video"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginBottom="13dp"
-                    android:text="Play video" />
+    <Button
+            android:id="@+id/button_play_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/play_video" />
 
-        </RelativeLayout>
-    </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

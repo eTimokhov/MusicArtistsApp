@@ -11,6 +11,7 @@
     <string name="upload_image">Upload image</string>
     <string name="save">Save</string>
     <string name="upload_video">Upload video</string>
+    <string name="play_video">Play video</string>
 
     <string-array name="countries_any">
         <item>@string/any</item>
