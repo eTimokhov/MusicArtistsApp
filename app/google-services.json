@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "28635240997",
+    "firebase_url": "https://musicartistsapp.firebaseio.com",
+    "project_id": "musicartistsapp",
+    "storage_bucket": "musicartistsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28635240997:android:18a9d4f24b897da7e93dcc",
+        "android_client_info": {
+          "package_name": "com.example.musicartistsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28635240997-aodm9ifh4po298iks9vu9tn49j6ghh06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc0zGDEXJj4f-Rn__AA1MQa9iwhWtUU8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28635240997-aodm9ifh4po298iks9vu9tn49j6ghh06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

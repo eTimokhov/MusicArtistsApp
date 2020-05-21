@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MusicArtistsApp</string>
+    <string name="default_description">This is default artist.</string>
+</resources>

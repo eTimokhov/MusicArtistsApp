@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E0E0E0">
+
+    <RelativeLayout
+            android:id="@+id/artist_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp">
+
+        <ImageView
+                android:id="@+id/artist_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:alpha="1.0"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/unknown_artist" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+        <TextView
+                android:id="@+id/artist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/artist_country"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:text="California-style pizza" />
+
+        <TextView
+                android:id="@+id/artist_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/artist_image"
+                android:layout_alignStart="@+id/artist_name"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/white"
+                tools:text="United States" />
+
+        <TextView
+                android:id="@+id/artist_genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/artist_name"
+                android:layout_alignBottom="@+id/artist_image"
+                android:layout_marginStart="309dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="172dp"
+                android:textColor="@android:color/white"
+                tools:text="United States" />
+
+    </RelativeLayout>
+
+    <ScrollView
+            android:id="@+id/artist_description_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/artist_card"
+            android:fillViewport="false">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:padding="8dp">
+
+            <TextView
+                    android:id="@+id/artist_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_description"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

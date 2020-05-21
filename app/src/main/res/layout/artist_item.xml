@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+    <ImageView
+            android:id="@+id/artist_image"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/unknown_artist"
+            tools:ignore="ContentDescription" />
+
+    <TextView
+            android:id="@+id/artist_name"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/artist_image"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-2dp"
+            android:layout_toEndOf="@+id/artist_image"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Sample artist" />
+
+    <TextView
+            android:id="@+id/artist_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/artist_name"
+            android:layout_below="@+id/artist_name"
+            tools:text="USA" />
+
+    <TextView
+            android:id="@+id/artist_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/artist_country"
+            android:layout_below="@+id/artist_country"
+            android:ellipsize="end"
+            android:maxLines="2"
+            tools:text="Electronic, Pop" />
+
+    <TextView
+            android:id="@+id/artist_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/artist_image"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@string/default_description"/>
+
+</RelativeLayout>
