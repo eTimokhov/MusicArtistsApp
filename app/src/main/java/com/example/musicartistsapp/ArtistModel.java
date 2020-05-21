@@ -3,6 +3,9 @@ package com.example.musicartistsapp;
 import java.util.List;
 
 public class ArtistModel {
+    public static final String COUNTRY = "country";
+    public static final String GENRES = "genres";
+
     private String name;
     private String description;
     private String country;

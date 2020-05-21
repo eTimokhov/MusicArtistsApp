@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">MusicArtistsApp</string>
     <string name="default_description">This is default artist.</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="filter">Filter</string>
+    <string name="any">Any</string>
+
+    <string-array name="countries">
+        <item>@string/any</item>
+        <item>USA</item>
+        <item>Australia</item>
+        <item>England</item>
+    </string-array>
+
+    <string-array name="genres">
+        <item>@string/any</item>
+        <item>Electronic</item>
+        <item>Hip-hop</item>
+        <item>Pop</item>
+    </string-array>
 </resources>
