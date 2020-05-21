@@ -23,7 +23,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:layout_width="wrap_content"
-                android:entries="@array/countries"
+                android:entries="@array/countries_any"
         />
 
 
@@ -39,7 +39,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:entries="@array/genres"
+                android:entries="@array/genres_any"
         />
 
     </RelativeLayout>

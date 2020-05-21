@@ -27,6 +27,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Remove filter" />
+
+            <Button
+                    android:id="@+id/button_add_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_new_artist" />
         </LinearLayout>
 
     </FrameLayout>

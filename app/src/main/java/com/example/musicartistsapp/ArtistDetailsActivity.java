@@ -1,6 +1,11 @@
 package com.example.musicartistsapp;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +18,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
-public class ArtistDetailsActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
+import java.io.IOException;
+
+public class ArtistDetailsActivity extends AppCompatActivity implements EventListener<DocumentSnapshot>, View.OnClickListener {
 
     private static final String TAG = "ArtistDetails";
 
@@ -21,6 +28,7 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
 
     private ActivityArtistDetailsBinding activityArtistDetailsBinding;
     private DocumentReference artistReference;
+    private ArtistModel artist;
     private ListenerRegistration artistListenerRegistration;
 
     @Override
@@ -30,7 +38,9 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         setContentView(activityArtistDetailsBinding.getRoot());
 
         String artistId = getIntent().getExtras().getString(ARTIST_ID);
-        artistReference = FirebaseFirestore.getInstance().collection("artists").document(artistId);
+        artistReference = FirebaseFirestore.getInstance().collection(AppDataset.getInstance().getDataset()).document(artistId);
+
+        activityArtistDetailsBinding.buttonPlayVideo.setOnClickListener(this);
     }
 
     @Override
@@ -55,7 +65,7 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
             return;
         }
 
-        ArtistModel artist = documentSnapshot.toObject(ArtistModel.class);
+        artist = documentSnapshot.toObject(ArtistModel.class);
 
         Glide.with(activityArtistDetailsBinding.artistImage.getContext())
                 .load(artist.getImagePath())
@@ -65,5 +75,24 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         activityArtistDetailsBinding.artistCountry.setText(artist.getCountry());
         activityArtistDetailsBinding.artistDescription.setText(artist.getDescription());
         activityArtistDetailsBinding.artistGenres.setText(artist.getGenres().toString());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_play_video:
+                onPlayVideoClicked();
+                break;
+        }
+    }
+
+    private void onPlayVideoClicked() {
+        if (artist.getVideoPath() != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse(artist.getVideoPath()), "video/mp4");
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Video not found", Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -5,18 +5,42 @@
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="any">Any</string>
+    <string name="add_new_artist">Add new artist</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="upload_image">Upload image</string>
+    <string name="save">Save</string>
+    <string name="upload_video">Upload video</string>
 
-    <string-array name="countries">
+    <string-array name="countries_any">
         <item>@string/any</item>
         <item>USA</item>
         <item>Australia</item>
         <item>England</item>
+        <item>Canada</item>
     </string-array>
 
-    <string-array name="genres">
+    <string-array name="countries">
+        <item>USA</item>
+        <item>Australia</item>
+        <item>England</item>
+        <item>Canada</item>
+    </string-array>
+
+    <string-array name="genres_any">
         <item>@string/any</item>
         <item>Electronic</item>
         <item>Hip-hop</item>
         <item>Pop</item>
+        <item>R&amp;B</item>
+        <item>Soul</item>
+    </string-array>
+
+    <string-array name="genres">
+        <item>Electronic</item>
+        <item>Hip-hop</item>
+        <item>Pop</item>
+        <item>R&amp;B</item>
+        <item>Soul</item>
     </string-array>
 </resources>
