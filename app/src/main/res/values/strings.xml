@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">MusicArtistsApp</string>
+    <string name="app_name" translatable="false">MusicArtistsApp</string>
+    <string name="dataset">artists</string>
     <string name="default_description">This is default artist.</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
@@ -15,36 +16,46 @@
     <string name="reset_filter">Reset filter</string>
     <string name="settings">Settings</string>
 
+    <string name="usa">USA</string>
+    <string name="australia">Australia</string>
+    <string name="england">England</string>
+    <string name="canada">Canada</string>
+    <string name="electronic">Electronic</string>
+    <string name="hip_hop">Hip-hop</string>
+    <string name="pop">Pop</string>
+    <string name="rnb">R&amp;B</string>
+    <string name="soul">Soul</string>
+
     <string-array name="countries_any">
         <item>@string/any</item>
-        <item>USA</item>
-        <item>Australia</item>
-        <item>England</item>
-        <item>Canada</item>
+        <item>@string/usa</item>
+        <item>@string/australia</item>
+        <item>@string/england</item>
+        <item>@string/canada</item>
     </string-array>
 
     <string-array name="countries">
-        <item>USA</item>
-        <item>Australia</item>
-        <item>England</item>
-        <item>Canada</item>
+        <item>@string/usa</item>
+        <item>@string/australia</item>
+        <item>@string/england</item>
+        <item>@string/canada</item>
     </string-array>
 
     <string-array name="genres_any">
         <item>@string/any</item>
-        <item>Electronic</item>
-        <item>Hip-hop</item>
-        <item>Pop</item>
-        <item>R&amp;B</item>
-        <item>Soul</item>
+        <item>@string/electronic</item>
+        <item>@string/hip_hop</item>
+        <item>@string/pop</item>
+        <item>@string/rnb</item>
+        <item>@string/soul</item>
     </string-array>
 
     <string-array name="genres">
-        <item>Electronic</item>
-        <item>Hip-hop</item>
-        <item>Pop</item>
-        <item>R&amp;B</item>
-        <item>Soul</item>
+        <item>@string/electronic</item>
+        <item>@string/hip_hop</item>
+        <item>@string/pop</item>
+        <item>@string/rnb</item>
+        <item>@string/soul</item>
     </string-array>
 
     <string-array name="background_color_array">

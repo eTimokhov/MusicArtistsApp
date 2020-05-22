@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_description">Это исполнитель по умолчанию.</string>
+    <string name="cancel">Отменить</string>
+    <string name="apply">Применить</string>
+    <string name="filter">Фильтр</string>
+    <string name="any">Любой</string>
+    <string name="add_new_artist">Добавить нового исполнителя</string>
+    <string name="name">Имя</string>
+    <string name="description">Описание</string>
+    <string name="upload_image">Загрузить фото</string>
+    <string name="save">Сохранить</string>
+    <string name="upload_video">Загрузить видео</string>
+    <string name="play_video">Воспроизвести видео</string>
+    <string name="reset_filter">Сбрость фильтр</string>
+    <string name="settings">Настройки</string>
+    <string name="dataset">artists_ru</string>
+    <string name="usa">США</string>
+    <string name="australia">Австралия</string>
+    <string name="england">Англия</string>
+    <string name="canada">Канада</string>
+    <string name="electronic">Электронная</string>
+    <string name="pop">Поп</string>
+    <string name="rnb">R&amp;B</string>
+    <string name="soul">Соул</string>
+    <string name="hip_hop">Хип-хоп</string>
+</resources>

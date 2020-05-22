@@ -12,7 +12,7 @@ public class GlobalConfig {
     private static GlobalConfig instance = null;
 
     private String dataset;
-    private String language;
+
     private String backgroundColor = "White";
     private Integer fontSize = 14;
     private String fontFamily = "sans-serif";
@@ -57,23 +57,6 @@ public class GlobalConfig {
         return instance;
     }
 
-    public String getDataset() {
-        return dataset;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        dataset = languageToDataset.get(language);
-        this.language = language;
-    }
-
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
-    }
-
     public String getBackgroundColor() {
         return backgroundColor;
     }
@@ -108,5 +91,14 @@ public class GlobalConfig {
         setFontSize(Integer.valueOf(matcher.group()));
 
         notifyObservers();
+    }
+
+
+    public String getDataset() {
+        return dataset;
+    }
+
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
     }
 }

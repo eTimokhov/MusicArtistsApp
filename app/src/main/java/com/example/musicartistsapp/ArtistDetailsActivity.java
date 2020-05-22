@@ -36,7 +36,6 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         super.onCreate(savedInstanceState);
         activityArtistDetailsBinding = ActivityArtistDetailsBinding.inflate(getLayoutInflater());
         setContentView(activityArtistDetailsBinding.getRoot());
-
         String artistId = getIntent().getExtras().getString(ARTIST_ID);
         artistReference = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset()).document(artistId);
 

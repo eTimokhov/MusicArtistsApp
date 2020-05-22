@@ -14,18 +14,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<VH>
-        implements EventListener<QuerySnapshot> {
+public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements EventListener<QuerySnapshot> {
     private static final String TAG = "FirestoreAdapter";
 
-    private Query mQuery;
-    private ListenerRegistration mRegistration;
+    private Query query;
+    private ListenerRegistration listenerRegistration;
 
-    private ArrayList<DocumentSnapshot> mSnapshots = new ArrayList<>();
+    private ArrayList<DocumentSnapshot> documentSnapshots = new ArrayList<>();
 
     public FirestoreAdapter(Query query) {
-        mQuery = query;
+        this.query = query;
     }
 
     @Override
@@ -56,18 +54,18 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     public void startListening() {
-        if (mQuery != null && mRegistration == null) {
-            mRegistration = mQuery.addSnapshotListener(this);
+        if (query != null && listenerRegistration == null) {
+            listenerRegistration = query.addSnapshotListener(this);
         }
     }
 
     public void stopListening() {
-        if (mRegistration != null) {
-            mRegistration.remove();
-            mRegistration = null;
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+            listenerRegistration = null;
         }
 
-        mSnapshots.clear();
+        documentSnapshots.clear();
         notifyDataSetChanged();
     }
 
@@ -76,43 +74,43 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         stopListening();
 
         // Clear existing data
-        mSnapshots.clear();
+        documentSnapshots.clear();
         notifyDataSetChanged();
 
         // Listen to new query
-        mQuery = query;
+        this.query = query;
         startListening();
     }
 
     @Override
     public int getItemCount() {
-        return mSnapshots.size();
+        return documentSnapshots.size();
     }
 
     protected DocumentSnapshot getSnapshot(int index) {
-        return mSnapshots.get(index);
+        return documentSnapshots.get(index);
     }
 
     protected void onDocumentAdded(DocumentChange change) {
-        mSnapshots.add(change.getNewIndex(), change.getDocument());
+        documentSnapshots.add(change.getNewIndex(), change.getDocument());
         notifyItemInserted(change.getNewIndex());
     }
 
     protected void onDocumentModified(DocumentChange change) {
         if (change.getOldIndex() == change.getNewIndex()) {
             // Item changed but remained in same position
-            mSnapshots.set(change.getOldIndex(), change.getDocument());
+            documentSnapshots.set(change.getOldIndex(), change.getDocument());
             notifyItemChanged(change.getOldIndex());
         } else {
             // Item changed and changed position
-            mSnapshots.remove(change.getOldIndex());
-            mSnapshots.add(change.getNewIndex(), change.getDocument());
+            documentSnapshots.remove(change.getOldIndex());
+            documentSnapshots.add(change.getNewIndex(), change.getDocument());
             notifyItemMoved(change.getOldIndex(), change.getNewIndex());
         }
     }
 
     protected void onDocumentRemoved(DocumentChange change) {
-        mSnapshots.remove(change.getOldIndex());
+        documentSnapshots.remove(change.getOldIndex());
         notifyItemRemoved(change.getOldIndex());
     }
 

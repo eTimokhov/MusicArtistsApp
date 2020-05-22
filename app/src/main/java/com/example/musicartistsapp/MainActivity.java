@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
-        //
-        GlobalConfig.getInstance().setDataset("artists");
-
-        //
+        GlobalConfig.getInstance().setDataset(getResources().getString(R.string.dataset));
 
         filterFragment = new FilterFragment();
         addArtistFragment = new AddArtistFragment();
