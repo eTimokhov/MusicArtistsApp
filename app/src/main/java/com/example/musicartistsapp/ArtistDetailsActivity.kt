@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.musicartistsapp.GlobalConfig.Companion.instance
+import com.example.musicartistsapp.GlobalConfig.Companion.GlobalConfigInstance
 import com.example.musicartistsapp.databinding.ActivityArtistDetailsBinding
 import com.google.firebase.firestore.*
 
@@ -25,9 +25,9 @@ class ArtistDetailsActivity : AppCompatActivity(), EventListener<DocumentSnapsho
         activityArtistDetailsBinding = ActivityArtistDetailsBinding.inflate(layoutInflater)
         setContentView(activityArtistDetailsBinding?.getRoot())
         val artistId = intent.extras!!.getString(ARTIST_ID)
-        artistReference = FirebaseFirestore.getInstance().collection(instance!!.dataset!!).document(artistId!!)
+        artistReference = FirebaseFirestore.getInstance().collection(GlobalConfigInstance!!.dataset!!).document(artistId!!)
         activityArtistDetailsBinding?.buttonPlayVideo?.setOnClickListener(this)
-        instance!!.addObserver(this)
+        GlobalConfigInstance!!.addObserver(this)
     }
 
     public override fun onStart() {

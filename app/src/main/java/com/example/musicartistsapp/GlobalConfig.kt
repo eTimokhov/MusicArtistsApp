@@ -3,8 +3,13 @@ package com.example.musicartistsapp
 import java.util.*
 import java.util.regex.Pattern
 
-class GlobalConfig private constructor() {
-    var dataset: String? = null
+class GlobalConfig {
+    companion object {
+        val GlobalConfigInstance = GlobalConfig()
+    }
+
+    lateinit var dataset: String
+
     private var backgroundColor = "White"
     private var fontSize = 14
     private var fontFamily = "sans-serif"
@@ -31,23 +36,5 @@ class GlobalConfig private constructor() {
         matcher.find()
         this.fontSize = Integer.valueOf(matcher.group())
         notifyObservers()
-    }
-
-    companion object {
-        @kotlin.jvm.JvmStatic
-        var instance: GlobalConfig? = null
-            get() {
-                if (field == null) {
-                    field = GlobalConfig()
-                }
-                return field
-            }
-            private set
-        private val languageToDataset: MutableMap<String?, String?> = HashMap()
-    }
-
-    init {
-        languageToDataset["en"] = "artists"
-        languageToDataset["ru"] = "artists_ru"
     }
 }

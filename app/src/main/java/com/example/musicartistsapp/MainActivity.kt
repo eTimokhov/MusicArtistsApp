@@ -7,49 +7,53 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicartistsapp.AddArtistFragment.AddArtistListener
-import com.example.musicartistsapp.ArtistDetailsActivity
 import com.example.musicartistsapp.FirestoreArtistsRecyclerAdapter.OnArtistSelectedListener
-import com.example.musicartistsapp.GlobalConfig.Companion.instance
+import com.example.musicartistsapp.GlobalConfig.Companion.GlobalConfigInstance
 import com.example.musicartistsapp.databinding.ActivityMainBinding
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragment.FilterListener, View.OnClickListener, AddArtistListener, ConfigObserver {
-    private var activityMainBinding: ActivityMainBinding? = null
-    private var firestoreArtistsRecyclerAdapter: FirestoreArtistsRecyclerAdapter? = null
-    private var filterFragment: FilterFragment? = null
-    private var addArtistFragment: AddArtistFragment? = null
-    private var settingsFragment: SettingsFragment? = null
+    private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var firestoreArtistsRecyclerAdapter: FirestoreArtistsRecyclerAdapter
+    private lateinit var filterFragment: FilterFragment
+    private lateinit var addArtistFragment: AddArtistFragment
+    private lateinit var settingsFragment: SettingsFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        GlobalConfigInstance.dataset = resources.getString(R.string.dataset)
+
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMainBinding?.getRoot())
-        instance!!.dataset = resources.getString(R.string.dataset)
+        activityMainBinding.artistsRecycler.layoutManager = LinearLayoutManager(this)
+        activityMainBinding.buttonFilter.setOnClickListener(this)
+        activityMainBinding.buttonRemoveFilter.setOnClickListener(this)
+        activityMainBinding.buttonAddArtist.setOnClickListener(this)
+        activityMainBinding.buttonSettings.setOnClickListener(this)
+        setContentView(activityMainBinding.root)
+
         filterFragment = FilterFragment()
         addArtistFragment = AddArtistFragment()
         settingsFragment = SettingsFragment()
-        activityMainBinding?.artistsRecycler?.layoutManager = LinearLayoutManager(this)
-        activityMainBinding?.buttonFilter?.setOnClickListener(this)
-        activityMainBinding?.buttonRemoveFilter?.setOnClickListener(this)
-        activityMainBinding?.buttonAddArtist?.setOnClickListener(this)
-        activityMainBinding?.buttonSettings?.setOnClickListener(this)
+
         FirebaseFirestore.setLoggingEnabled(true)
         val firebaseFirestore = FirebaseFirestore.getInstance()
-        val query: Query = firebaseFirestore.collection(instance!!.dataset!!)
+        val query: Query = firebaseFirestore.collection(GlobalConfigInstance.dataset)
         firestoreArtistsRecyclerAdapter = FirestoreArtistsRecyclerAdapter(query, this)
-        activityMainBinding?.artistsRecycler?.adapter = firestoreArtistsRecyclerAdapter
-        instance!!.addObserver(this)
+        activityMainBinding.artistsRecycler.adapter = firestoreArtistsRecyclerAdapter
+
+        GlobalConfigInstance.addObserver(this)
     }
 
     public override fun onStart() {
         super.onStart()
-        firestoreArtistsRecyclerAdapter!!.startListening()
+        firestoreArtistsRecyclerAdapter.startListening()
     }
 
     public override fun onStop() {
         super.onStop()
-        firestoreArtistsRecyclerAdapter!!.stopListening()
+        firestoreArtistsRecyclerAdapter.stopListening()
     }
 
     override fun onArtistSelected(artist: DocumentSnapshot?) {
@@ -59,14 +63,14 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
     }
 
     override fun onFilter(filter: FilterModel?) {
-        var query: Query = FirebaseFirestore.getInstance().collection(instance!!.dataset!!)
+        var query: Query = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset)
         if (filter!!.country != null) {
             query = query.whereEqualTo("country", filter.country)
         }
         if (filter.genre != null) {
             query = query.whereArrayContains("genres", filter.genre!!)
         }
-        firestoreArtistsRecyclerAdapter!!.setQuery(query)
+        firestoreArtistsRecyclerAdapter.setQuery(query)
     }
 
     override fun onClick(v: View) {
@@ -79,32 +83,32 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
     }
 
     private fun onSettingsClicked() {
-        settingsFragment!!.show(supportFragmentManager, TAG)
+        settingsFragment.show(supportFragmentManager, TAG)
     }
 
     private fun onAddArtistClicked() {
-        addArtistFragment!!.show(supportFragmentManager, TAG)
+        addArtistFragment.show(supportFragmentManager, TAG)
     }
 
     private fun onRemoveFilterClicked() {
-        val query: Query = FirebaseFirestore.getInstance().collection(instance!!.dataset!!)
-        firestoreArtistsRecyclerAdapter!!.setQuery(query)
-        filterFragment!!.setDefaultSelection()
+        val query: Query = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset)
+        firestoreArtistsRecyclerAdapter.setQuery(query)
+        filterFragment.setDefaultSelection()
     }
 
     private fun onFilterClicked() {
-        filterFragment!!.show(supportFragmentManager, TAG)
+        filterFragment.show(supportFragmentManager, TAG)
     }
 
     override fun onAddArtist(artistModel: ArtistModel?) {
         val batch = FirebaseFirestore.getInstance().batch()
-        val artistDocumentReference = FirebaseFirestore.getInstance().collection(instance!!.dataset!!).document()
+        val artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfigInstance!!.dataset!!).document()
         batch[artistDocumentReference] = artistModel!!
         batch.commit()
     }
 
     override fun updateConfig(fontFamily: String?, fontSize: Int, backgroundColor: String?) {
-        activityMainBinding!!.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor!!.toLowerCase()))
+        activityMainBinding.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor!!.toLowerCase()))
     }
 
     companion object {

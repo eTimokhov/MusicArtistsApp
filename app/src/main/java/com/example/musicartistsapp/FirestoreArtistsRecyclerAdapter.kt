@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.musicartistsapp.GlobalConfig.Companion.instance
+import com.example.musicartistsapp.GlobalConfig.Companion.GlobalConfigInstance
 import com.example.musicartistsapp.databinding.ArtistItemBinding
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
@@ -117,7 +117,7 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
             artistItemBinding!!.artistDescription.text = artist.description
             artistItemBinding!!.artistGenres.text = artist.genres.toString()
             itemView.setOnClickListener { listener?.onArtistSelected(snapshot) }
-            instance!!.addObserver(this)
+            GlobalConfigInstance!!.addObserver(this)
         }
 
         override fun updateConfig(fontFamily: String?, fontSize: Int, backgroundColor: String?) {

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.example.musicartistsapp.GlobalConfig.Companion.instance
+import com.example.musicartistsapp.GlobalConfig.Companion.GlobalConfigInstance
 import com.example.musicartistsapp.databinding.SettingsFragmentBinding
 
 class SettingsFragment : DialogFragment(), View.OnClickListener {
@@ -44,7 +44,7 @@ class SettingsFragment : DialogFragment(), View.OnClickListener {
         val selectedFontFamily = settingsFragmentBinding!!.spinnerFontFamily.selectedItem as String
         val selectedFontSize = settingsFragmentBinding!!.spinnerFontSize.selectedItem as String
         val selectedBackgroundColor = settingsFragmentBinding!!.spinnerBackgroundColor.selectedItem as String
-        instance!!.updateGlobalConfig(selectedFontFamily, selectedFontSize, selectedBackgroundColor)
+        GlobalConfigInstance!!.updateGlobalConfig(selectedFontFamily, selectedFontSize, selectedBackgroundColor)
         dismiss()
     }
 }
