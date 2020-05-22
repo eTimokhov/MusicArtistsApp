@@ -29,7 +29,7 @@ class GlobalConfig {
         }
     }
 
-    fun updateGlobalConfig(fontFamily: String, fontSize: String?, backgroundColor: String) {
+    fun updateGlobalConfig(fontFamily: String, fontSize: String, backgroundColor: String) {
         this.fontFamily = fontFamily
         this.backgroundColor = backgroundColor
         val matcher = Pattern.compile("\\d+").matcher(fontSize)

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.musicartistsapp.databinding.FilterFragmentBinding
+import java.lang.IllegalStateException
 
 class FilterFragment : DialogFragment(), View.OnClickListener {
     internal interface FilterListener {
@@ -33,7 +34,8 @@ class FilterFragment : DialogFragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        dialog!!.window!!.setLayout(
+        val window = dialog?.window ?: throw IllegalStateException("Cannot retrieve dialog window")
+        window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
     }

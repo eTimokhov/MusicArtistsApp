@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.musicartistsapp.databinding.AddArtistFragmentBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.lang.IllegalStateException
 
 class AddArtistFragment : DialogFragment(), View.OnClickListener {
     private lateinit var addArtistFragmentBinding: AddArtistFragmentBinding
@@ -52,7 +53,10 @@ class AddArtistFragment : DialogFragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val window = dialog?.window ?: throw IllegalStateException("Cannot retrieve dialog window")
+        window.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     private fun onSubmitClicked() {
@@ -143,6 +147,7 @@ class AddArtistFragment : DialogFragment(), View.OnClickListener {
             R.id.button_video -> onSelectVideo()
         }
     }
+
     //TODO: deal with constants in all classes!
     companion object {
         const val TAG = "AddArtistFragment"

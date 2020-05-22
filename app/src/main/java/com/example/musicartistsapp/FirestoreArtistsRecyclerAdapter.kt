@@ -110,8 +110,8 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
         constructor(itemView: View) : super(itemView) {}
 
         fun bind(snapshot: DocumentSnapshot, listener: OnArtistSelectedListener?) {
-            val artist = snapshot.toObject(ArtistModel::class.java) ?:
-                    throw IllegalStateException("Cannot convert snapshot to artist model.")
+            val artist = snapshot.toObject(ArtistModel::class.java)
+                    ?: throw IllegalStateException("Cannot convert snapshot to artist model.")
             val resources = itemView.resources
             Glide.with(artistItemBinding.artistImage.context)
                     .load(artist.imagePath)
