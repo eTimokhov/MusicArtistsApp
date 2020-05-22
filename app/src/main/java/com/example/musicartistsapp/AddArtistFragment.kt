@@ -26,20 +26,22 @@ class AddArtistFragment : DialogFragment(), View.OnClickListener {
     }
 
     private var addArtistListener: AddArtistListener? = null
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         addArtistFragmentBinding = AddArtistFragmentBinding.inflate(inflater, container, false)
-        addArtistFragmentBinding.addArtistSave.setOnClickListener(this)
-        addArtistFragmentBinding.addArtistCancel.setOnClickListener(this)
-        addArtistFragmentBinding.buttonImage.setOnClickListener(this)
-        addArtistFragmentBinding.buttonVideo.setOnClickListener(this)
+        addArtistFragmentBinding?.addArtistSave?.setOnClickListener(this)
+        addArtistFragmentBinding?.addArtistCancel?.setOnClickListener(this)
+        addArtistFragmentBinding?.buttonImage?.setOnClickListener(this)
+        addArtistFragmentBinding?.buttonVideo?.setOnClickListener(this)
         storageReference = FirebaseStorage.getInstance().reference
-        return addArtistFragmentBinding.getRoot()
+        return addArtistFragmentBinding?.getRoot()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        //TODO: check if i reaaly need this code and is it possible to make binding not-nullable
         addArtistFragmentBinding = null
         imageUri = null
         videoUri = null

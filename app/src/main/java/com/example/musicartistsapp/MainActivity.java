@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         Query query = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset());
 
         if (filter.getCountry() != null) {
-            query = query.whereEqualTo(ArtistModel.COUNTRY, filter.getCountry());
+            query = query.whereEqualTo("country", filter.getCountry());
         }
 
         if (filter.getGenre() != null) {
-            query = query.whereArrayContains(ArtistModel.GENRES, filter.getGenre());
+            query = query.whereArrayContains("genres", filter.getGenre());
         }
 
         firestoreArtistsRecyclerAdapter.setQuery(query);
