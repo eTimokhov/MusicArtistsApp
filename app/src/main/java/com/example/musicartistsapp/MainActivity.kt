@@ -102,13 +102,13 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
 
     override fun onAddArtist(artistModel: ArtistModel?) {
         val batch = FirebaseFirestore.getInstance().batch()
-        val artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfigInstance!!.dataset!!).document()
+        val artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset).document()
         batch[artistDocumentReference] = artistModel!!
         batch.commit()
     }
 
-    override fun updateConfig(fontFamily: String?, fontSize: Int, backgroundColor: String?) {
-        activityMainBinding.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor!!.toLowerCase()))
+    override fun updateConfig(fontFamily: String, fontSize: Int, backgroundColor: String) {
+        activityMainBinding.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor.toLowerCase()))
     }
 
     companion object {

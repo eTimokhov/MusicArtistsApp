@@ -120,7 +120,7 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
             GlobalConfigInstance!!.addObserver(this)
         }
 
-        override fun updateConfig(fontFamily: String?, fontSize: Int, backgroundColor: String?) {
+        override fun updateConfig(fontFamily: String, fontSize: Int, backgroundColor: String) {
             artistItemBinding!!.artistName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize + 2.toFloat())
             artistItemBinding!!.artistCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
             artistItemBinding!!.artistGenres.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 2.toFloat())
