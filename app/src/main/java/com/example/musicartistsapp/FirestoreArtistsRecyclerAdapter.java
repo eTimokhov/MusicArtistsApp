@@ -149,14 +149,14 @@ public class FirestoreArtistsRecyclerAdapter extends RecyclerView.Adapter<Firest
             Resources resources = itemView.getResources();
 
             Glide.with(artistItemBinding.artistImage.getContext())
-                    .load(artist.getImagePath())
+                    .load(artist.imagePath)
                     .placeholder(R.drawable.unknown_artist)
                     .into(artistItemBinding.artistImage);
 
-            artistItemBinding.artistName.setText(artist.getName());
-            artistItemBinding.artistCountry.setText(artist.getCountry());
-            artistItemBinding.artistDescription.setText(artist.getDescription());
-            artistItemBinding.artistGenres.setText(artist.getGenres().toString());
+            artistItemBinding.artistName.setText(artist.name);
+            artistItemBinding.artistCountry.setText(artist.country);
+            artistItemBinding.artistDescription.setText(artist.description);
+            artistItemBinding.artistGenres.setText(artist.genres.toString());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -69,14 +69,14 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         artist = documentSnapshot.toObject(ArtistModel.class);
 
         Glide.with(activityArtistDetailsBinding.artistImage.getContext())
-                .load(artist.getImagePath())
+                .load(artist.imagePath)
                 .placeholder(R.drawable.unknown_artist)
                 .into(activityArtistDetailsBinding.artistImage);
 
-        activityArtistDetailsBinding.artistName.setText(artist.getName());
-        activityArtistDetailsBinding.artistCountry.setText(artist.getCountry());
-        activityArtistDetailsBinding.artistDescription.setText(artist.getDescription());
-        activityArtistDetailsBinding.artistGenres.setText(artist.getGenres().toString());
+        activityArtistDetailsBinding.artistName.setText(artist.name);
+        activityArtistDetailsBinding.artistCountry.setText(artist.country);
+        activityArtistDetailsBinding.artistDescription.setText(artist.description);
+        activityArtistDetailsBinding.artistGenres.setText(artist.genres.toString());
     }
 
     @Override
@@ -89,9 +89,9 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
     }
 
     private void onPlayVideoClicked() {
-        if (artist.getVideoPath() != null) {
+        if (artist.videoPath != null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse(artist.getVideoPath()), "video/mp4");
+            intent.setDataAndType(Uri.parse(artist.videoPath), "video/mp4");
             startActivity(intent);
         } else {
             Toast.makeText(this, "Video not found", Toast.LENGTH_LONG).show();
