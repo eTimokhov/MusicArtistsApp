@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
     private fun onRemoveFilterClicked() {
         val query: Query = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset)
         firestoreArtistsRecyclerAdapter.setQuery(query)
-        filterFragment.setDefaultSelection()
     }
 
     private fun onFilterClicked() {

@@ -13,18 +13,15 @@ class FilterFragment : DialogFragment(), View.OnClickListener {
         fun onFilter(filter: FilterModel?)
     }
 
-    private var filterFragmentBinding: FilterFragmentBinding? = null
-    private var filterListener: FilterListener? = null
+    private lateinit var filterFragmentBinding: FilterFragmentBinding
+    private lateinit var filterListener: FilterListener
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         filterFragmentBinding = FilterFragmentBinding.inflate(inflater, container, false)
-        filterFragmentBinding?.buttonSearch?.setOnClickListener(this)
-        filterFragmentBinding?.buttonCancel?.setOnClickListener(this)
-        return filterFragmentBinding?.getRoot()
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        filterFragmentBinding = null
+        filterFragmentBinding.buttonSearch.setOnClickListener(this)
+        filterFragmentBinding.buttonCancel.setOnClickListener(this)
+        return filterFragmentBinding.root
     }
 
     override fun onAttach(context: Context) {
@@ -41,20 +38,18 @@ class FilterFragment : DialogFragment(), View.OnClickListener {
                 ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    fun onSearchClicked() {
-        if (filterListener != null) {
-            filterListener!!.onFilter(createFilter())
-        }
+    private fun onSearchClicked() {
+        filterListener.onFilter(createFilter())
         dismiss()
     }
 
     private fun retrieveSelectedCountry(): String? {
-        val selectedCountry = filterFragmentBinding!!.spinnerCountry.selectedItem as String
+        val selectedCountry = filterFragmentBinding.spinnerCountry.selectedItem as String
         return if (getString(R.string.any) == selectedCountry) null else selectedCountry
     }
 
     private fun retrieveSelectedGenre(): String? {
-        val selectedGenre = filterFragmentBinding!!.sprinnerGenre.selectedItem as String
+        val selectedGenre = filterFragmentBinding.sprinnerGenre.selectedItem as String
         return if (getString(R.string.any) == selectedGenre) null else selectedGenre
     }
 
@@ -65,15 +60,8 @@ class FilterFragment : DialogFragment(), View.OnClickListener {
         return filter
     }
 
-    fun onCancelClicked() {
+    private fun onCancelClicked() {
         dismiss()
-    }
-
-    fun setDefaultSelection() {
-        if (filterFragmentBinding != null) {
-            filterFragmentBinding!!.spinnerCountry.setSelection(0)
-            filterFragmentBinding!!.sprinnerGenre.setSelection(0)
-        }
     }
 
     override fun onClick(v: View) {
