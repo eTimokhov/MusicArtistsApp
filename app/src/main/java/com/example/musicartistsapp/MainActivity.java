@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         Query query = firebaseFirestore.collection(GlobalConfig.getInstance().getDataset());
 
-        FirestoreRecyclerOptions<ArtistModel> options = new FirestoreRecyclerOptions.Builder<ArtistModel>().setQuery(query, ArtistModel.class).build();
-
         firestoreArtistsRecyclerAdapter = new FirestoreArtistsRecyclerAdapter(query, this);
 
         activityMainBinding.artistsRecycler.setAdapter(firestoreArtistsRecyclerAdapter);
@@ -94,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         }
 
         firestoreArtistsRecyclerAdapter.setQuery(query);
-
-//        mViewModel.setFilterUtil(filterUtil);
     }
 
     @Override
@@ -140,17 +136,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         DocumentReference artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset()).document();
         batch.set(artistDocumentReference, artistModel);
 
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                //TODO: rewrite logging - cover the tracks :)
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "Write batch succeeded.");
-                } else {
-                    Log.w(TAG, "write batch failed.", task.getException());
-                }
-            }
-        });
+        batch.commit();
     }
 
     @Override

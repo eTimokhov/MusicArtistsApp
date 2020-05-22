@@ -40,28 +40,6 @@ public class SettingsFragment extends DialogFragment implements View.OnClickList
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-//    private String retrieveSelectedCountry() {
-//        String selectedCountry = (String) filterFragmentBinding.spinnerCountry.getSelectedItem();
-//        return getString(R.string.any).equals(selectedCountry) ? null : selectedCountry;
-//    }
-//
-//    private String retrieveSelectedGenre() {
-//        String selectedGenre = (String) filterFragmentBinding.sprinnerGenre.getSelectedItem();
-//        return getString(R.string.any).equals(selectedGenre) ? null : selectedGenre;
-//    }
-
-    public void onCancelClicked() {
-        dismiss();
-    }
-
-    public void setDefaultSelection() {
-//        if (filterFragmentBinding != null) {
-//            filterFragmentBinding.spinnerCountry.setSelection(0);
-//            filterFragmentBinding.sprinnerGenre.setSelection(0);
-//        }
-    }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

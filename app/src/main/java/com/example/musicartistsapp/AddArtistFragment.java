@@ -147,9 +147,6 @@ public class AddArtistFragment extends DialogFragment implements View.OnClickLis
                     }
                 }
                 break;
-            default:
-                //TODO: delete this debug output
-                Toast.makeText(getActivity(), "Result code: -1", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -166,15 +163,9 @@ public class AddArtistFragment extends DialogFragment implements View.OnClickLis
                 return ref.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            //TODO: rewrite with ternary
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    imageUri = downloadUri.toString();
-                } else {
-                    imageUri = null;
-                }
+                imageUri = task.isSuccessful() ? task.getResult().toString() : null;
             }
         });
     }
@@ -195,12 +186,7 @@ public class AddArtistFragment extends DialogFragment implements View.OnClickLis
             //TODO: rewrite with ternary
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    videoUri = downloadUri.toString();
-                } else {
-                    videoUri = null;
-                }
+                videoUri = task.isSuccessful() ? task.getResult().toString() : null;
             }
         });
     }
@@ -222,19 +208,4 @@ public class AddArtistFragment extends DialogFragment implements View.OnClickLis
                 break;
         }
     }
-
-//    @Override
-//    public void updateBackground(int id) {
-//        mBinding.newPizzaDialog.setBackgroundColor(getResources().getColor(id, null));
-//    }
-//
-//    @Override
-//    public void updateFontSize(int size) {
-//
-//    }
-//
-//    @Override
-//    public void updateFontFamily(String family) {
-//
-//    }
 }
