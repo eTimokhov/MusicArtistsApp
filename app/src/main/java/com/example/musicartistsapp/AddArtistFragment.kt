@@ -13,36 +13,32 @@ import androidx.fragment.app.DialogFragment
 import com.example.musicartistsapp.databinding.AddArtistFragmentBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import java.util.*
 
-public class AddArtistFragment : DialogFragment(), View.OnClickListener {
-    private var addArtistFragmentBinding: AddArtistFragmentBinding? = null
+class AddArtistFragment : DialogFragment(), View.OnClickListener {
+    private lateinit var addArtistFragmentBinding: AddArtistFragmentBinding
+    private lateinit var storageReference: StorageReference
+
     private var imageUri: String? = null
     private var videoUri: String? = null
-    private var storageReference: StorageReference? = null
 
     internal interface AddArtistListener {
         fun onAddArtist(artistModel: ArtistModel?)
     }
 
-    private var addArtistListener: AddArtistListener? = null
+    private lateinit var addArtistListener: AddArtistListener
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         addArtistFragmentBinding = AddArtistFragmentBinding.inflate(inflater, container, false)
-        addArtistFragmentBinding?.addArtistSave?.setOnClickListener(this)
-        addArtistFragmentBinding?.addArtistCancel?.setOnClickListener(this)
-        addArtistFragmentBinding?.buttonImage?.setOnClickListener(this)
-        addArtistFragmentBinding?.buttonVideo?.setOnClickListener(this)
+        addArtistFragmentBinding.addArtistSave.setOnClickListener(this)
+        addArtistFragmentBinding.addArtistCancel.setOnClickListener(this)
+        addArtistFragmentBinding.buttonImage.setOnClickListener(this)
+        addArtistFragmentBinding.buttonVideo.setOnClickListener(this)
         storageReference = FirebaseStorage.getInstance().reference
-        return addArtistFragmentBinding?.getRoot()
+        return addArtistFragmentBinding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //TODO: check if i reaaly need this code and is it possible to make binding not-nullable
-        addArtistFragmentBinding = null
         imageUri = null
         videoUri = null
     }
@@ -56,26 +52,22 @@ public class AddArtistFragment : DialogFragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        dialog!!.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     private fun onSubmitClicked() {
         val artist = ArtistModel()
         try {
-            artist.name = addArtistFragmentBinding!!.artistNameEdit.text.toString()
-            artist.description = addArtistFragmentBinding!!.artistDescriptionEdit.text.toString()
-            artist.country = addArtistFragmentBinding!!.artistCountrySpinner.selectedItem as String
-            artist.genres = Arrays.asList(addArtistFragmentBinding!!.artistGenreSpinner.selectedItem as String)
+            artist.name = addArtistFragmentBinding.artistNameEdit.text.toString()
+            artist.description = addArtistFragmentBinding.artistDescriptionEdit.text.toString()
+            artist.country = addArtistFragmentBinding.artistCountrySpinner.selectedItem as String
+            artist.genres = listOf(addArtistFragmentBinding.artistGenreSpinner.selectedItem as String)
             artist.imagePath = imageUri
             artist.videoPath = videoUri
         } catch (e: Exception) {
             dismiss()
         }
-        if (addArtistListener != null) {
-            addArtistListener!!.onAddArtist(artist)
-        }
+        addArtistListener.onAddArtist(artist)
         dismiss()
     }
 
@@ -97,20 +89,27 @@ public class AddArtistFragment : DialogFragment(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_CODE_IMAGE -> if (resultCode == Activity.RESULT_OK) {
-                val imageLocalUri = data!!.data
-                imageLocalUri?.let { uploadImageFromFileUri(it) }
-            }
-            REQUEST_CODE_VIDEO -> if (resultCode == Activity.RESULT_OK) {
-                val videoLocalUri = data!!.data
-                videoLocalUri?.let { uploadVideoFromFileUri(it) }
+        if (data != null) {
+            when (requestCode) {
+                REQUEST_CODE_IMAGE -> if (resultCode == Activity.RESULT_OK) {
+                    val imageLocalUri = data.data
+                    imageLocalUri?.let { uploadImageFromFileUri(it) }
+                }
+                REQUEST_CODE_VIDEO -> if (resultCode == Activity.RESULT_OK) {
+                    val videoLocalUri = data.data
+                    videoLocalUri?.let { uploadVideoFromFileUri(it) }
+                }
             }
         }
     }
 
     private fun uploadImageFromFileUri(localUri: Uri) {
-        val ref = storageReference!!.child(localUri.lastPathSegment!!)
+        val lastPathSegment = localUri.lastPathSegment
+        if (lastPathSegment == null) {
+            Toast.makeText(activity, "Cannot upload image", Toast.LENGTH_LONG).show()
+            return
+        }
+        val ref = storageReference.child(lastPathSegment)
         val uploadTask = ref.putFile(localUri)
         uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
@@ -121,17 +120,19 @@ public class AddArtistFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun uploadVideoFromFileUri(localUri: Uri) {
-        val ref = storageReference!!.child(localUri.lastPathSegment!!)
+        val lastPathSegment = localUri.lastPathSegment
+        if (lastPathSegment == null) {
+            Toast.makeText(activity, "Cannot upload video", Toast.LENGTH_LONG).show()
+            return
+        }
+        val ref = storageReference.child(lastPathSegment)
         val uploadTask = ref.putFile(localUri)
         uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
                 Toast.makeText(activity, "Error when uploading video", Toast.LENGTH_LONG).show()
             }
             ref.downloadUrl
-        }.addOnCompleteListener { task ->
-            //TODO: rewrite with ternary
-            videoUri = if (task.isSuccessful) task.result.toString() else null
-        }
+        }.addOnCompleteListener { task -> videoUri = if (task.isSuccessful) task.result.toString() else null }
     }
 
     override fun onClick(v: View) {
@@ -142,12 +143,12 @@ public class AddArtistFragment : DialogFragment(), View.OnClickListener {
             R.id.button_video -> onSelectVideo()
         }
     }
-
+    //TODO: deal with constants in all classes!
     companion object {
         const val TAG = "AddArtistFragment"
+        private const val REQUEST_CODE_IMAGE = 1
         private const val REQUEST_CODE_VIDEO = 2
         private const val IMAGE_URI = "image_uri"
         private const val VIDEO_URI = "video_uri"
-        private const val REQUEST_CODE_IMAGE = 1
     }
 }
