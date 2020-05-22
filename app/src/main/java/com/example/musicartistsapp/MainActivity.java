@@ -1,6 +1,7 @@
 package com.example.musicartistsapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
-public class MainActivity extends AppCompatActivity implements FirestoreArtistsRecyclerAdapter.OnArtistSelectedListener, FilterFragment.FilterListener, View.OnClickListener, AddArtistFragment.AddArtistListener {
+public class MainActivity extends AppCompatActivity implements FirestoreArtistsRecyclerAdapter.OnArtistSelectedListener, FilterFragment.FilterListener, View.OnClickListener, AddArtistFragment.AddArtistListener, ConfigObserver {
 
     private static final String TAG = "MainActivity";
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
     private FirestoreArtistsRecyclerAdapter firestoreArtistsRecyclerAdapter;
     private FilterFragment filterFragment;
     private AddArtistFragment addArtistFragment;
+    private SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +36,23 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
         setContentView(activityMainBinding.getRoot());
 
         //
-        AppDataset.getInstance().setDataset("artists");
+        GlobalConfig.getInstance().setDataset("artists");
+
         //
 
         filterFragment = new FilterFragment();
         addArtistFragment = new AddArtistFragment();
+        settingsFragment = new SettingsFragment();
 
         activityMainBinding.artistsRecycler.setLayoutManager(new LinearLayoutManager(this));
         activityMainBinding.buttonFilter.setOnClickListener(this);
         activityMainBinding.buttonRemoveFilter.setOnClickListener(this);
         activityMainBinding.buttonAddArtist.setOnClickListener(this);
+        activityMainBinding.buttonSettings.setOnClickListener(this);
 
         FirebaseFirestore.setLoggingEnabled(true);
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        Query query = firebaseFirestore.collection(AppDataset.getInstance().getDataset());
+        Query query = firebaseFirestore.collection(GlobalConfig.getInstance().getDataset());
 
         FirestoreRecyclerOptions<ArtistModel> options = new FirestoreRecyclerOptions.Builder<ArtistModel>().setQuery(query, ArtistModel.class).build();
 
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
 
         activityMainBinding.artistsRecycler.setAdapter(firestoreArtistsRecyclerAdapter);
 
+
+        GlobalConfig.getInstance().addObserver(this);
     }
 
     @Override
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
 
     @Override
     public void onFilter(FilterModel filter) {
-        Query query = FirebaseFirestore.getInstance().collection(AppDataset.getInstance().getDataset());
+        Query query = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset());
 
         if (filter.getCountry() != null) {
             query = query.whereEqualTo(ArtistModel.COUNTRY, filter.getCountry());
@@ -106,7 +113,14 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
             case R.id.button_add_artist:
                 onAddArtistClicked();
                 break;
+            case R.id.button_settings:
+                onSettingsClicked();
+                break;
         }
+    }
+
+    private void onSettingsClicked() {
+        settingsFragment.show(getSupportFragmentManager(), TAG);
     }
 
     private void onAddArtistClicked() {
@@ -114,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
     }
 
     private void onRemoveFilterClicked() {
-        Query query = FirebaseFirestore.getInstance().collection(AppDataset.getInstance().getDataset());
+        Query query = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset());
         firestoreArtistsRecyclerAdapter.setQuery(query);
         filterFragment.setDefaultSelection();
     }
@@ -126,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
     @Override
     public void onAddArtist(ArtistModel artistModel) {
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
-        DocumentReference artistDocumentReference = FirebaseFirestore.getInstance().collection(AppDataset.getInstance().getDataset()).document();
+        DocumentReference artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset()).document();
         batch.set(artistDocumentReference, artistModel);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -140,5 +154,10 @@ public class MainActivity extends AppCompatActivity implements FirestoreArtistsR
                 }
             }
         });
+    }
+
+    @Override
+    public void updateConfig(String fontFamily, int fontSize, String backgroundColor) {
+        activityMainBinding.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor.toLowerCase()));
     }
 }

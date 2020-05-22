@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E0E0E0"
-        android:orientation="vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-            android:id="@+id/artist_image"
+    <LinearLayout
+            android:id="@+id/artist_details_body"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:alpha="1.0"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/unknown_artist" />
-
-    <TextView
-            android:id="@+id/artist_name"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            tools:text="John Doe" />
+            android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/artist_genres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/primary_text_light_nodisable"
-            tools:text="Pop, Hip-hop" />
+        <ImageView
+                android:id="@+id/artist_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:alpha="1.0"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/unknown_artist" />
 
-    <TextView
-            android:id="@+id/artist_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@android:color/background_dark"
-            tools:text="United States" />
+        <TextView
+                android:id="@+id/artist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:text="John Doe" />
 
-    <TextView
-            android:id="@+id/artist_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/default_description" />
+        <TextView
+                android:id="@+id/artist_genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/primary_text_light_nodisable"
+                tools:text="Pop, Hip-hop" />
 
-    <Button
-            android:id="@+id/button_play_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/play_video" />
+        <TextView
+                android:id="@+id/artist_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@android:color/background_dark"
+                tools:text="United States" />
+
+        <TextView
+                android:id="@+id/artist_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/default_description" />
+
+        <Button
+                android:id="@+id/button_play_video"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/play_video" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

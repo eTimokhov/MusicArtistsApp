@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/settings_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <TextView
+            android:id="@+id/settings_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Spinner
+            android:id="@+id/spinner_background_color"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/background_color_array" />
+
+    <Spinner
+            android:id="@+id/spinner_font_size"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/font_size_array" />
+
+    <Spinner
+            android:id="@+id/spinner_font_family"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/font_family_array" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        <Button
+                android:id="@+id/settings_cancel"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:text="@string/cancel" />
+
+        <Button
+                android:id="@+id/settings_save"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/save" />
+
+    </LinearLayout>
+
+</LinearLayout>

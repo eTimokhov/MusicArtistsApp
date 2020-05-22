@@ -1,6 +1,8 @@
 package com.example.musicartistsapp;
 
 import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +35,13 @@ public class FirestoreArtistsRecyclerAdapter extends FirestoreAdapter<FirestoreA
         holder.bind(getSnapshot(position), onArtistSelectedListener);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements ConfigObserver {
 
-        private ArtistItemBinding binding;
+        private ArtistItemBinding artistItemBinding;
 
-        public ViewHolder(ArtistItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        public ViewHolder(ArtistItemBinding artistItemBinding) {
+            super(artistItemBinding.getRoot());
+            this.artistItemBinding = artistItemBinding;
         }
 
         public ViewHolder(View itemView) {
@@ -51,18 +53,16 @@ public class FirestoreArtistsRecyclerAdapter extends FirestoreAdapter<FirestoreA
             ArtistModel artist = snapshot.toObject(ArtistModel.class);
             Resources resources = itemView.getResources();
 
-            // Load image
-            Glide.with(binding.artistImage.getContext())
+            Glide.with(artistItemBinding.artistImage.getContext())
                     .load(artist.getImagePath())
                     .placeholder(R.drawable.unknown_artist)
-                    .into(binding.artistImage);
+                    .into(artistItemBinding.artistImage);
 
-            binding.artistName.setText(artist.getName());
-            binding.artistCountry.setText(artist.getCountry());
-            binding.artistDescription.setText(artist.getDescription());
-            binding.artistGenres.setText(artist.getGenres().toString());
+            artistItemBinding.artistName.setText(artist.getName());
+            artistItemBinding.artistCountry.setText(artist.getCountry());
+            artistItemBinding.artistDescription.setText(artist.getDescription());
+            artistItemBinding.artistGenres.setText(artist.getGenres().toString());
 
-            // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -72,9 +72,20 @@ public class FirestoreArtistsRecyclerAdapter extends FirestoreAdapter<FirestoreA
                 }
             });
 
-            //AppConfig.getInstance().addObserver(this);
-            //updateFontSize(AppConfig.getInstance().getFontSize());
-            //updateFontFamily(AppConfig.getInstance().getFontFamily());
+            GlobalConfig.getInstance().addObserver(this);
+        }
+
+        @Override
+        public void updateConfig(String fontFamily, int fontSize, String backgroundColor) {
+            artistItemBinding.artistName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize + 2);
+            artistItemBinding.artistCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+            artistItemBinding.artistGenres.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 2);
+            artistItemBinding.artistDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+
+            artistItemBinding.artistName.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
+            artistItemBinding.artistCountry.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+            artistItemBinding.artistGenres.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+            artistItemBinding.artistDescription.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
         }
     }
 }

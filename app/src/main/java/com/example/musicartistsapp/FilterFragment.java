@@ -50,7 +50,6 @@ public class FilterFragment extends DialogFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        //why this code exists?
         getDialog().getWindow().setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);

@@ -83,7 +83,6 @@ public class AddArtistFragment extends DialogFragment implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        //TODO: why do i need this?
         getDialog().getWindow().setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);

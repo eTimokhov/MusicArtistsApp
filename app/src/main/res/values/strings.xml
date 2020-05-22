@@ -46,4 +46,25 @@
         <item>R&amp;B</item>
         <item>Soul</item>
     </string-array>
+
+    <string-array name="background_color_array">
+        <item>White</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+    </string-array>
+
+    <string-array name="font_size_array">
+        <item>12sp</item>
+        <item>14sp</item>
+        <item>16sp</item>
+        <item>18sp</item>
+    </string-array>
+
+    <string-array name="font_family_array">
+        <item>sans-serif</item>
+        <item>casual</item>
+        <item>cursive</item>
+        <item>monospace</item>
+    </string-array>
 </resources>

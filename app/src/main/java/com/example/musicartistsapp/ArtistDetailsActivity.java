@@ -1,9 +1,11 @@
 package com.example.musicartistsapp;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -18,9 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
-import java.io.IOException;
-
-public class ArtistDetailsActivity extends AppCompatActivity implements EventListener<DocumentSnapshot>, View.OnClickListener {
+public class ArtistDetailsActivity extends AppCompatActivity implements EventListener<DocumentSnapshot>, View.OnClickListener, ConfigObserver {
 
     private static final String TAG = "ArtistDetails";
 
@@ -38,9 +38,11 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         setContentView(activityArtistDetailsBinding.getRoot());
 
         String artistId = getIntent().getExtras().getString(ARTIST_ID);
-        artistReference = FirebaseFirestore.getInstance().collection(AppDataset.getInstance().getDataset()).document(artistId);
+        artistReference = FirebaseFirestore.getInstance().collection(GlobalConfig.getInstance().getDataset()).document(artistId);
 
         activityArtistDetailsBinding.buttonPlayVideo.setOnClickListener(this);
+
+        GlobalConfig.getInstance().addObserver(this);
     }
 
     @Override
@@ -95,5 +97,20 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
         } else {
             Toast.makeText(this, "Video not found", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void updateConfig(String fontFamily, int fontSize, String backgroundColor) {
+        activityArtistDetailsBinding.artistDetailsBody.setBackgroundColor(Color.parseColor(backgroundColor.toLowerCase()));
+
+        activityArtistDetailsBinding.artistName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize + 2);
+        activityArtistDetailsBinding.artistCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+        activityArtistDetailsBinding.artistGenres.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 2);
+        activityArtistDetailsBinding.artistDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+
+        activityArtistDetailsBinding.artistName.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
+        activityArtistDetailsBinding.artistCountry.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+        activityArtistDetailsBinding.artistGenres.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+        activityArtistDetailsBinding.artistDescription.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
     }
 }
