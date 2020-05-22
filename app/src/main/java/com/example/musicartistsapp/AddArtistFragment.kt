@@ -15,7 +15,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
 
-class AddArtistFragment : DialogFragment(), View.OnClickListener {
+public class AddArtistFragment : DialogFragment(), View.OnClickListener {
     private var addArtistFragmentBinding: AddArtistFragmentBinding? = null
     private var imageUri: String? = null
     private var videoUri: String? = null
