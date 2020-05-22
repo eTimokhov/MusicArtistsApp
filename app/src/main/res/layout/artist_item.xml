@@ -10,7 +10,7 @@
     <ImageView
             android:id="@+id/artist_image"
             android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/unknown_artist"
             tools:ignore="ContentDescription" />
@@ -41,8 +41,11 @@
             android:id="@+id/artist_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/artist_country"
             android:layout_below="@+id/artist_country"
+            android:layout_alignStart="@+id/artist_country"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="7dp"
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="Electronic, Pop" />

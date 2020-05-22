@@ -69,6 +69,7 @@ public class ArtistDetailsActivity extends AppCompatActivity implements EventLis
 
         Glide.with(activityArtistDetailsBinding.artistImage.getContext())
                 .load(artist.getImagePath())
+                .placeholder(R.drawable.unknown_artist)
                 .into(activityArtistDetailsBinding.artistImage);
 
         activityArtistDetailsBinding.artistName.setText(artist.getName());

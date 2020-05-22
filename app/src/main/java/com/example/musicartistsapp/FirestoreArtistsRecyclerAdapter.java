@@ -54,6 +54,7 @@ public class FirestoreArtistsRecyclerAdapter extends FirestoreAdapter<FirestoreA
             // Load image
             Glide.with(binding.artistImage.getContext())
                     .load(artist.getImagePath())
+                    .placeholder(R.drawable.unknown_artist)
                     .into(binding.artistImage);
 
             binding.artistName.setText(artist.getName());

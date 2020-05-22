@@ -13,36 +13,20 @@
             android:layout_marginBottom="8dp"
             android:text="@string/filter" />
 
-    <RelativeLayout
+    <Spinner
+            android:id="@+id/spinner_country"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:entries="@array/countries_any" />
 
-        <Spinner
-                android:id="@+id/spinner_country"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="0dp"
-                android:layout_width="wrap_content"
-                android:entries="@array/countries_any"
-        />
-
-
-    </RelativeLayout>
+    <Spinner
+            android:id="@+id/sprinner_genre"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/genres_any" />
 
     <!-- Sort by -->
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <Spinner
-                android:id="@+id/sprinner_genre"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:entries="@array/genres_any"
-        />
-
-    </RelativeLayout>
 
     <!-- Cancel and apply buttons -->
     <LinearLayout
