@@ -12,6 +12,7 @@ import com.example.musicartistsapp.GlobalConfig.Companion.GlobalConfigInstance
 import com.example.musicartistsapp.databinding.ArtistItemBinding
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import java.lang.IllegalStateException
 import java.util.*
 
 class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onArtistSelectedListener: OnArtistSelectedListener) : RecyclerView.Adapter<FirestoreArtistsRecyclerAdapter.ViewHolder>(), EventListener<QuerySnapshot> {
@@ -21,6 +22,7 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
 
     private val documentSnapshots = ArrayList<DocumentSnapshot>()
     private var listenerRegistration: ListenerRegistration? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ArtistItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false))
@@ -45,8 +47,9 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
     }
 
     fun startListening() {
+        val query = query
         if (query != null && listenerRegistration == null) {
-            listenerRegistration = query!!.addSnapshotListener(this)
+            listenerRegistration = query.addSnapshotListener(this)
         }
     }
 
@@ -72,9 +75,10 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
     }
 
     fun stopListening() {
+        val listenerRegistration = listenerRegistration
         if (listenerRegistration != null) {
-            listenerRegistration!!.remove()
-            listenerRegistration = null
+            listenerRegistration.remove()
+            this.listenerRegistration = null
         }
         documentSnapshots.clear()
         notifyDataSetChanged()
@@ -97,41 +101,43 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
     }
 
     class ViewHolder : RecyclerView.ViewHolder, ConfigObserver {
-        private var artistItemBinding: ArtistItemBinding? = null
+        private lateinit var artistItemBinding: ArtistItemBinding
 
         constructor(artistItemBinding: ArtistItemBinding) : super(artistItemBinding.root) {
             this.artistItemBinding = artistItemBinding
         }
 
-        constructor(itemView: View?) : super(itemView!!) {}
+        constructor(itemView: View) : super(itemView) {}
 
         fun bind(snapshot: DocumentSnapshot, listener: OnArtistSelectedListener?) {
-            val artist = snapshot.toObject(ArtistModel::class.java)
+            val artist = snapshot.toObject(ArtistModel::class.java) ?:
+                    throw IllegalStateException("Cannot convert snapshot to artist model.")
             val resources = itemView.resources
-            Glide.with(artistItemBinding!!.artistImage.context)
-                    .load(artist!!.imagePath)
+            Glide.with(artistItemBinding.artistImage.context)
+                    .load(artist.imagePath)
                     .placeholder(R.drawable.unknown_artist)
-                    .into(artistItemBinding!!.artistImage)
-            artistItemBinding!!.artistName.text = artist.name
-            artistItemBinding!!.artistCountry.text = artist.country
-            artistItemBinding!!.artistDescription.text = artist.description
-            artistItemBinding!!.artistGenres.text = artist.genres.toString()
+                    .into(artistItemBinding.artistImage)
+            artistItemBinding.artistName.text = artist.name
+            artistItemBinding.artistCountry.text = artist.country
+            artistItemBinding.artistDescription.text = artist.description
+            artistItemBinding.artistGenres.text = artist.genres.toString()
             itemView.setOnClickListener { listener?.onArtistSelected(snapshot) }
-            GlobalConfigInstance!!.addObserver(this)
+            GlobalConfigInstance.addObserver(this)
         }
 
         override fun updateConfig(fontFamily: String, fontSize: Int, backgroundColor: String) {
-            artistItemBinding!!.artistName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize + 2.toFloat())
-            artistItemBinding!!.artistCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
-            artistItemBinding!!.artistGenres.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 2.toFloat())
-            artistItemBinding!!.artistDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
-            artistItemBinding!!.artistName.typeface = Typeface.create(fontFamily, Typeface.BOLD)
-            artistItemBinding!!.artistCountry.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
-            artistItemBinding!!.artistGenres.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
-            artistItemBinding!!.artistDescription.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
+            artistItemBinding.artistName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize + 2.toFloat())
+            artistItemBinding.artistCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
+            artistItemBinding.artistGenres.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 2.toFloat())
+            artistItemBinding.artistDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
+            artistItemBinding.artistName.typeface = Typeface.create(fontFamily, Typeface.BOLD)
+            artistItemBinding.artistCountry.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
+            artistItemBinding.artistGenres.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
+            artistItemBinding.artistDescription.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
         }
     }
 
+    //TODO: constants
     companion object {
         private const val TAG = "FirestoreArtistsRecyclerAdapter"
     }
