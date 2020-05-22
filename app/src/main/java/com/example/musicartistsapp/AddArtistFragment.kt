@@ -16,14 +16,17 @@ import com.google.firebase.storage.StorageReference
 import java.lang.IllegalStateException
 
 class AddArtistFragment : DialogFragment(), View.OnClickListener {
+    private val REQUEST_CODE_IMAGE = 1
+    private val REQUEST_CODE_VIDEO = 2
+
     private lateinit var addArtistFragmentBinding: AddArtistFragmentBinding
     private lateinit var storageReference: StorageReference
 
     private var imageUri: String? = null
     private var videoUri: String? = null
 
-    internal interface AddArtistListener {
-        fun onAddArtist(artistModel: ArtistModel?)
+    interface AddArtistListener {
+        fun onAddArtist(artistModel: ArtistModel)
     }
 
     private lateinit var addArtistListener: AddArtistListener
@@ -146,14 +149,5 @@ class AddArtistFragment : DialogFragment(), View.OnClickListener {
             R.id.button_image -> onSelectImage()
             R.id.button_video -> onSelectVideo()
         }
-    }
-
-    //TODO: deal with constants in all classes!
-    companion object {
-        const val TAG = "AddArtistFragment"
-        private const val REQUEST_CODE_IMAGE = 1
-        private const val REQUEST_CODE_VIDEO = 2
-        private const val IMAGE_URI = "image_uri"
-        private const val VIDEO_URI = "video_uri"
     }
 }

@@ -15,6 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragment.FilterListener, View.OnClickListener, AddArtistListener, ConfigObserver {
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private lateinit var activityMainBinding: ActivityMainBinding
     private lateinit var firestoreArtistsRecyclerAdapter: FirestoreArtistsRecyclerAdapter
     private lateinit var filterFragment: FilterFragment
@@ -56,19 +60,20 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
         firestoreArtistsRecyclerAdapter.stopListening()
     }
 
-    override fun onArtistSelected(artist: DocumentSnapshot?) {
+    override fun onArtistSelected(artist: DocumentSnapshot) {
         val intent = Intent(this, ArtistDetailsActivity::class.java)
-        intent.putExtra(ArtistDetailsActivity.ARTIST_ID, artist!!.id)
+        intent.putExtra(ArtistDetailsActivity.ARTIST_ID, artist.id)
         startActivity(intent)
     }
 
-    override fun onFilter(filter: FilterModel?) {
+    override fun onFilter(filter: FilterModel) {
         var query: Query = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset)
-        if (filter!!.country != null) {
+        if (filter.country != null) {
             query = query.whereEqualTo("country", filter.country)
         }
-        if (filter.genre != null) {
-            query = query.whereArrayContains("genres", filter.genre!!)
+        val genre = filter.genre
+        if (genre != null) {
+            query = query.whereArrayContains("genres", genre)
         }
         firestoreArtistsRecyclerAdapter.setQuery(query)
     }
@@ -99,18 +104,14 @@ class MainActivity : AppCompatActivity(), OnArtistSelectedListener, FilterFragme
         filterFragment.show(supportFragmentManager, TAG)
     }
 
-    override fun onAddArtist(artistModel: ArtistModel?) {
+    override fun onAddArtist(artistModel: ArtistModel) {
         val batch = FirebaseFirestore.getInstance().batch()
         val artistDocumentReference = FirebaseFirestore.getInstance().collection(GlobalConfigInstance.dataset).document()
-        batch[artistDocumentReference] = artistModel!!
+        batch[artistDocumentReference] = artistModel
         batch.commit()
     }
 
     override fun updateConfig(fontFamily: String, fontSize: Int, backgroundColor: String) {
         activityMainBinding.mainScreen.setBackgroundColor(Color.parseColor(backgroundColor.toLowerCase()))
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

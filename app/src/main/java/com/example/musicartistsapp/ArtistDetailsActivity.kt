@@ -17,6 +17,11 @@ import com.google.firebase.firestore.*
 import java.lang.IllegalStateException
 
 class ArtistDetailsActivity : AppCompatActivity(), EventListener<DocumentSnapshot?>, View.OnClickListener, ConfigObserver {
+    companion object {
+        private val TAG = "ArtistDetails"
+        val ARTIST_ID = "musicartistsapp_artist_id"
+    }
+
     private lateinit var activityArtistDetailsBinding: ActivityArtistDetailsBinding
     private lateinit var artistReference: DocumentReference
     private lateinit var artist: ArtistModel
@@ -92,9 +97,4 @@ class ArtistDetailsActivity : AppCompatActivity(), EventListener<DocumentSnapsho
         activityArtistDetailsBinding.artistDescription.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
     }
 
-    //TODO: deal with constants
-    companion object {
-        private const val TAG = "ArtistDetails"
-        const val ARTIST_ID = "musicartistsapp_artist_id"
-    }
 }

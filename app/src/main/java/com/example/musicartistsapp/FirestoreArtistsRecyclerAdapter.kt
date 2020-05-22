@@ -4,7 +4,6 @@ import android.graphics.Typeface
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,8 +15,10 @@ import java.lang.IllegalStateException
 import java.util.*
 
 class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onArtistSelectedListener: OnArtistSelectedListener) : RecyclerView.Adapter<FirestoreArtistsRecyclerAdapter.ViewHolder>(), EventListener<QuerySnapshot> {
+    private val TAG = "FirestoreArtistsRecyclerAdapter"
+
     interface OnArtistSelectedListener {
-        fun onArtistSelected(artist: DocumentSnapshot?)
+        fun onArtistSelected(artist: DocumentSnapshot)
     }
 
     private val documentSnapshots = ArrayList<DocumentSnapshot>()
@@ -100,19 +101,11 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
         return documentSnapshots[index]
     }
 
-    class ViewHolder : RecyclerView.ViewHolder, ConfigObserver {
-        private lateinit var artistItemBinding: ArtistItemBinding
-
-        constructor(artistItemBinding: ArtistItemBinding) : super(artistItemBinding.root) {
-            this.artistItemBinding = artistItemBinding
-        }
-
-        constructor(itemView: View) : super(itemView) {}
+    class ViewHolder(private var artistItemBinding: ArtistItemBinding) : RecyclerView.ViewHolder(artistItemBinding.root), ConfigObserver {
 
         fun bind(snapshot: DocumentSnapshot, listener: OnArtistSelectedListener?) {
             val artist = snapshot.toObject(ArtistModel::class.java)
                     ?: throw IllegalStateException("Cannot convert snapshot to artist model.")
-            val resources = itemView.resources
             Glide.with(artistItemBinding.artistImage.context)
                     .load(artist.imagePath)
                     .placeholder(R.drawable.unknown_artist)
@@ -135,11 +128,6 @@ class FirestoreArtistsRecyclerAdapter(private var query: Query?, private val onA
             artistItemBinding.artistGenres.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
             artistItemBinding.artistDescription.typeface = Typeface.create(fontFamily, Typeface.NORMAL)
         }
-    }
-
-    //TODO: constants
-    companion object {
-        private const val TAG = "FirestoreArtistsRecyclerAdapter"
     }
 
 }

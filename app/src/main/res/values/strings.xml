@@ -60,9 +60,9 @@
 
     <string-array name="background_color_array">
         <item>White</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>Yellow</item>
+        <item>Fuchsia</item>
+        <item>Lime</item>
+        <item>Teal</item>
     </string-array>
 
     <string-array name="font_size_array">

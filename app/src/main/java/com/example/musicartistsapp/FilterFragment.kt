@@ -10,8 +10,8 @@ import com.example.musicartistsapp.databinding.FilterFragmentBinding
 import java.lang.IllegalStateException
 
 class FilterFragment : DialogFragment(), View.OnClickListener {
-    internal interface FilterListener {
-        fun onFilter(filter: FilterModel?)
+    interface FilterListener {
+        fun onFilter(filter: FilterModel)
     }
 
     private lateinit var filterFragmentBinding: FilterFragmentBinding
