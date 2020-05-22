@@ -12,6 +12,8 @@
     <string name="save">Save</string>
     <string name="upload_video">Upload video</string>
     <string name="play_video">Play video</string>
+    <string name="reset_filter">Reset filter</string>
+    <string name="settings">Settings</string>
 
     <string-array name="countries_any">
         <item>@string/any</item>

@@ -6,43 +6,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <FrameLayout
-            android:id="@+id/frame_layout"
+    <LinearLayout
+            android:id="@+id/action_buttons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        <ImageButton
+                android:id="@+id/button_add_artist"
+                style="@android:style/Widget.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/add_new_artist"
+                app:srcCompat="@drawable/icon_add" />
 
-            <Button
-                    android:id="@+id/button_filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter" />
+        <ImageButton
+                android:id="@+id/button_filter"
+                style="@android:style/Widget.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/filter"
+                app:srcCompat="@drawable/icon_filter" />
 
-            <Button
-                    android:id="@+id/button_remove_filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remove filter" />
+        <ImageButton
+                android:id="@+id/button_remove_filter"
+                style="@android:style/Widget.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/reset_filter"
+                app:srcCompat="@drawable/icon_filter_crossed" />
 
-            <Button
-                    android:id="@+id/button_add_artist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_new_artist" />
-        </LinearLayout>
 
-    </FrameLayout>
+        <ImageButton
+                android:id="@+id/button_settings"
+                style="@android:style/Widget.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/settings"
+                app:srcCompat="@drawable/icons_settings" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/artists_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/frame_layout"
+            android:layout_below="@id/action_buttons"
             tools:listitem="@layout/artist_item" />
 
 </RelativeLayout>
